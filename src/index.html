@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 5-Apps & Webpack</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/index.js" type='module' defer></script>
+    <script src="./js/todo.js" type="module" defer></script>
+</head>
+
+<body>
+    <!-- nav bar -->
+    <nav id='nav'>
+        <div class="nav-menu" data-target="cover">Home</div>
+        <div class="nav-menu" data-target="todo">TODO List</div>
+        <div class="nav-menu" data-target="typing">Typing</div>
+        <div class="nav-menu" data-target="slide-puzzle">Slide Puzzle</div>
+        <div class="nav-menu" data-target="memory-card">Memory Card</div>
+        <div class="nav-menu" data-target="life">Game of Life</div>
+    </nav>
+
+    <!-- root element -->
+    <div id="root">
+        <section id="cover" class='active'>
+            <h1>Enjoy Coding!</h1>
+            <br>
+            <br>
+            <h2>Let's Brush up JS Coding Skill</h2>
+            <h2>and</h2>
+            <h2>Learn the Usage of Webpack</h2>
+        </section>
+
+        <!-- to_do list app -->
+        <section id="todo" class='app'>
+            <h1>TODO LIST</h1>
+            <div>
+                <form class="td-search-form">
+                    <label class="td-label">SEARCH</label>
+                    <input type="text" class="td-search-input" placeholder='Search...'>
+                </form>
+                <form class="td-add-form">
+                    <label class="td-label">ADD</label>
+                    <input type="text" class="td-add-input" placeholder='Add...'>
+                </form>
+            </div>
+            <div class="todo-container">
+                <h2>Remains to do</h2>
+                <ul class="todos">
+                    
+                </ul>
+            </div>
+            <div class="done-container">
+                <h2>Already done</h2>
+                <ul class="dones">
+                    
+                </ul>
+            </div>
+        </section>
+
+        <!-- typing app -->
+        <section id="typing" class='app'>
+            <h1>Typing</h1>
+        </section>
+
+        <!-- slide-puzzle app -->
+        <section id="slide-puzzle" class='app'>
+            <h1>Slide Puzzle</h1>
+        </section>
+
+        <!-- memory-card app -->
+        <section id="memory-card" class='app'>
+            <h1>Memory Card</h1>
+        </section>
+
+        <!--  game-of-life app -->
+        <section id='life' class='app'>
+            <h1>Game of Life</h1>
+        </section>
+    </div>
+   
+</body>
+
+</html>
