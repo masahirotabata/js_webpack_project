@@ -408,11 +408,21 @@ section.active{
     flex-direction: column;
 }
 
-.sp-screen{
+#sp-screen {
     border: 2px solid #fff;
     display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3列にする */
+    grid-template-rows: repeat(3, 1fr);    /* 3行にする */
     box-shadow: 0 0 15px 5px rgba(0,0,0,0.5);
-    margin:20px 0;
+    margin: 20px 0;
+}
+
+
+.test-tile{
+    width:100px;
+    height:100px;
+    border: 1px solid #fff;
+    background-color: #555;
 }
 
 .sp-screen.zoom{
@@ -722,6 +732,16 @@ canvas{
 
 .gl-back-to-menu:hover{
     background-color:lightgreen;
+}
+
+.sp-tile.hidden{
+    transform: rotateY(900deg);
+    backface-visibility: hidden;
+}
+
+.sp-tile.complete{
+    border:none;
+    pointer-events:none;
 }
 
 

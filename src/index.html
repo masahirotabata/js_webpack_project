@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="./js/index.js" type='module' defer></script>
     <script src="./js/todo.js" type="module" defer></script>
+    <script src="./js/slide.js" type="module" defer></script>
 </head>
 
 <body>
@@ -67,7 +68,34 @@
 
         <!-- slide-puzzle app -->
         <section id="slide-puzzle" class='app'>
+            <div class="sp-cover">
             <h1>Slide Puzzle</h1>
+                <ul class="sp-menu">
+                    <p>select the level</p>
+                    <li data-level="easy">easy</li>
+                    <li data-level="medium">medium</li>
+                    <li data-level="defficult">difficult</li>
+                </ul>
+            </div>
+            <div class="sp-container">
+                <img src="" alt="" id="sp-original-image">
+            </div>
+           <div class="sp-info-panel">
+               <img src="./images/slide_puzzle/space.png" alt="" id="sp-show-original-btn">
+               <div class="sp-moves">Moves: <span class="sp-counter"></span></div>
+               <div class="sp-back-to-menu">Back to Menu</div>
+           </div>
+            <div id="sp-screen">
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+                <div class="test-tile"></div>
+            </div>
         </section>
 
         <!-- memory-card app -->
