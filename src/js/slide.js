@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const screen = document.querySelector('#sp-screen');
     const counter = document.querySelector('.sp-counter');
     const testTile = document.querySelector('#test-tile'); // 新しく追加
-
+    const originalButton = document.querySelector('#sp-show-original-btn');
+    if (originalButton) {
+        originalButton.classList.remove('show'); // 初期状態を非表示に
+    }
     let level;
     let size;
     let orderedArray = [];
@@ -73,13 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
         originalImage.classList.remove('show');
     });
 
+    // renderTilesの改良
     function renderTiles(arr) {
         screen.innerHTML = '';
         arr.forEach((tile, index) => {
             const div = document.createElement('div');
             div.classList.add('sp-tile');
             if (index === hiddenTileIndex) {
-                div.classList.add('hidden');
+                div.classList.add('hidden'); // 空白タイルを設定
             } else {
                 div.style.backgroundImage = `url(./images/slide_puzzle/${selectedImage}/${level}/tile${tile}.png)`;
             }
@@ -87,23 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isAdjacent(index, hiddenTileIndex)) {
                     updateTiles(index);
                 }
-                updateScreen();
             });
             screen.appendChild(div);
-
-            // test-tileに画像を再表示するためのイベント
-            div.addEventListener('click', () => {
-                if (index !== hiddenTileIndex) {
-                    const tileImage = `url(./images/slide_puzzle/${selectedImage}/${level}/tile${tile}.png)`;
-                    // orderedArray にタイルが含まれているかチェック
-                    if (orderedArray.includes(tile)) {
-                        testTile.style.backgroundImage = tileImage;
-                        testTile.classList.add('show'); // 必要ならCSSで制御
-                    } else {
-                        console.warn('This tile does not belong to the original image.');
-                    }
-                }
-            });
         });
     }
 
@@ -130,12 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
         count++;
         if (counter) {
             counter.textContent = count;
-    
             // 完成条件のチェック
-            if (JSON.stringify(tilesArray) === JSON.stringify(orderedArray)) {
+            const isCompleted = checkCompletion();
+            if (isCompleted) {
                 setTimeout(() => {
-                    complete();
-                }, 500); // 完成時に遅延を追加
+                    autoCompletePuzzle(); // 自動で最後のタイルを埋める処理
+                }, 500);
             }
         } else {
             console.error('Counter element not found');
@@ -159,12 +148,66 @@ document.addEventListener('DOMContentLoaded', () => {
         return (Math.abs(x1 - x2) + Math.abs(y1 - y2)) === 1;
     }
 
+    function checkCompletion() {
+        // hidden タイル以外が正しい順序で揃っているか確認
+        for (let i = 0; i < tilesArray.length; i++) {
+            if (i !== hiddenTileIndex && tilesArray[i] !== orderedArray[i]) {
+                return false; // 揃っていない場合
+            }
+        }
+        // 完成した場合、自動でアニメーションを呼び出し
+        setTimeout(() => {
+            complete(); // アニメーションの起動
+        }, 500); // 遅延を加える
+        return true; // 揃った場合
+    }
+    
+    // 完成後のアニメーション処理
     function complete() {
-        const tiles = document.querySelectorAll('.sp-tile'); // タイルを再取得
-        tiles[hiddenTileIndex].classList.remove('hidden'); // 隠れたタイルを表示
-        screen.classList.add('zoom'); // スクリーン全体をズーム
+        const tiles = document.querySelectorAll('.sp-tile');
+        tiles[hiddenTileIndex].classList.remove('hidden'); // 空白タイルを可視化
+        screen.classList.add('zoom'); // ズームアニメーションを追加
         tiles.forEach(tile => {
-            tile.classList.add('complete'); // 完成した状態のクラスを追加
+            tile.classList.add('complete'); // 完成タイルのスタイルを適用
+            tile.style.pointerEvents = 'none'; // タイルをクリック不可に
         });
     }
+
+    // 新しく追加：自動でパズルを完成させる
+    // 自動で最後のタイルを埋める処理
+    function autoCompletePuzzle() {
+        if (hiddenTileIndex !== orderedArray.length - 1) {
+            // 空白タイルを最後の位置に移動
+            tilesArray[hiddenTileIndex] = tilesArray[orderedArray.length - 1];
+            tilesArray[orderedArray.length - 1] = null; // 空白タイルに設定
+            hiddenTileIndex = orderedArray.length - 1;
+        }
+
+        renderTiles(tilesArray); // タイルを再描画
+
+        // 完成したタイルを元に戻し、アニメーションを起動
+        setTimeout(() => {
+            complete(); // アニメーションの起動
+        }, 300); // アニメーション用の遅延
+    }
+
+    // sp-show-original-btn に表示されるタイルの更新処理
+    function updateOriginalButton() {
+        const originalButton = document.querySelector('#sp-show-original-btn');
+        if (originalButton) {
+            originalButton.style.backgroundImage = `url(./images/slide_puzzle/${selectedImage}/${selectedImage}.png)`;
+            originalButton.classList.add('show');
+        }
+    }
+
+    // 新しいタイルを追加
+    function addTestTile() {
+        if (testTile) {
+            testTile.addEventListener('click', () => {
+                alert("Test Tile clicked!");
+            });
+        }
+    }
+
+    addTestTile(); // 新しいタイルの追加処理を実行
 });
