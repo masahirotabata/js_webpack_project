@@ -11,6 +11,7 @@
     <script src="./js/todo.js" type="module" defer></script>
     <script src="./js/slide.js" type="module" defer></script>
     <script src="./js/typing.js" type="module" defer></script>
+    <script src="./js/memory.js" type="module" defer></script>
 </head>
 
 <body>
@@ -141,7 +142,20 @@
 
         <!-- memory-card app -->
         <section id="memory-card" class='app'>
-            <h1>Memory Card</h1>
+            <div class="mc-container">
+                <div class="mc-container-panel">
+                    <div>Time Passed: <span class='mc-time'>00:00</span></div>
+                    <div>Matched: <span class='mc-matched'>0</span></div>
+                    <div>Failed: <span class='mc-failed'>0</span></div>
+                    <button class="mc-reset-btn">Reset</button>
+                </div>
+                <div class="mc-deck"></div>
+            </div>
+            <div class="mc-congrats">
+                <h1>CONGRATULATION!!!</h1>
+                <h2>You made it in <span></span> seconds</h2>
+                <button class="mc-retry-btn">RETRY</button>
+            </div>
         </section>
 
         <!--  game-of-life app -->
